@@ -56,20 +56,31 @@ class HashTable {
 
   read(key) {
     // Your code here
-    let hashIndex = this.hashMod(key)
-    let curr = this.data[hashIndex]
+    let hashIndex = this.hashMod(key);
+    let curr = this.data[hashIndex];
 
     while (curr) {
       if (curr.key === key) {
-        return curr.value
+        return curr.value;
       }
-      curr = curr.next  
+      curr = curr.next;
     }
-    return undefined
+    return undefined;
   }
 
   resize() {
-    // Your code here
+    let oldData = this.data;
+    this.capacity *= 2;
+    this.data = Array(this.capacity).fill(null);
+    this.count = 0;
+
+    oldData.forEach((data) => {
+      let curr = data;
+      while (curr) {
+        this.insert(curr.key, curr.value);
+        curr = curr.next;
+      }
+    });
   }
 
   delete(key) {
