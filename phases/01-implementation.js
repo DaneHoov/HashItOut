@@ -58,7 +58,6 @@ class HashTable {
   }
 
   read(key) {
-    // Your code here
     let hashIndex = this.hashMod(key);
     let curr = this.data[hashIndex];
 
