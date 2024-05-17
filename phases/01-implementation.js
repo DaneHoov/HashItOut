@@ -56,6 +56,16 @@ class HashTable {
 
   read(key) {
     // Your code here
+    let hashIndex = this.hashMod(key)
+    let curr = this.data[hashIndex]
+
+    while (curr) {
+      if (curr.key === key) {
+        return curr.value
+      }
+      curr = curr.next  
+    }
+    return undefined
   }
 
   resize() {
