@@ -6,11 +6,13 @@ class KeyValuePair {
   }
 }
 
-class HashTable { // get O(1), set O(1), deleteKey O(1)
+class HashTable {
+  // get O(1), set O(1), deleteKey O(1)
 
   constructor(numBuckets = 8) {
-    // Initialize your buckets here
-    // Your code here 
+    this.capacity = numBuckets;
+    this.data = Array(this.capacity).fill(null);
+    this.count = 0;
   }
 
   hash(key) {
@@ -28,26 +30,41 @@ class HashTable { // get O(1), set O(1), deleteKey O(1)
     return this.hash(key) % this.capacity;
   }
 
-
   insert(key, value) {
-    // Your code here 
-  }
+    let hashIndex = this.hashMod(key);
+    let nonEmptyBucket = this.data[hashIndex];
+    let newKV = new KeyValuePair(key, value);
 
+    if (!nonEmptyBucket) {
+      this.data[hashIndex] = newKV;
+    } else {
+      let current = nonEmptyBucket;
+
+      while (current) {
+        if (current.key === key) {
+          current.value = value;
+          return;
+        }
+        if (!current.next) break;
+        current = current.next;
+      }
+      newKV.next = nonEmptyBucket;
+      this.data[hashIndex] = newKV;
+    }
+    this.count++;
+  }
 
   read(key) {
-    // Your code here 
+    // Your code here
   }
-
 
   resize() {
-    // Your code here 
+    // Your code here
   }
-
 
   delete(key) {
-    // Your code here 
+    // Your code here
   }
 }
-
 
 module.exports = HashTable;
