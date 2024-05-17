@@ -31,6 +31,9 @@ class HashTable {
   }
 
   insert(key, value) {
+    if (this.count / this.capacity >= 0.8) {
+      this.resize();
+    }
     let hashIndex = this.hashMod(key);
     let nonEmptyBucket = this.data[hashIndex];
     let newKV = new KeyValuePair(key, value);
